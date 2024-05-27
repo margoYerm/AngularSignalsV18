@@ -25,7 +25,7 @@
 
 
 <div class="demo-signals">
-  <h4>What is signals</h4>
+  <!-- <h4>What is signals</h4>
   <p>Counter value without signals: {{counter}}</p>
   <button class="btn" (click)="increment()">Increment</button>
   <p>This works because Angular use library Zone js for change detection,
@@ -33,8 +33,9 @@
     checking all component's expressions before an event and after an event.
     It's marked this value dirty and should be checked after each action.
   </p>
-  <hr>
+  <hr> -->
 
+  <p>Read only signal: {{readOnlySignal()}}</p>
   <p>Counter value like a signal: {{counterSignal()}}</p>
   <button class="btn" (click)="incrementSignal()">Increment(signal)</button>
   <p>
