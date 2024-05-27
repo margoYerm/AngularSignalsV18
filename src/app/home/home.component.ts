@@ -8,6 +8,9 @@ import {MessagesService} from "../messages/messages.service";
 import {catchError, from, throwError} from "rxjs";
 import {toObservable, toSignal, outputToObservable, outputFromObservable} from "@angular/core/rxjs-interop";
 
+type Counter = {
+  value: number;
+}
 @Component({
   selector: 'home',
   standalone: true,
@@ -24,7 +27,10 @@ export class HomeComponent {
   //counter = 0;
   counterSignal = signal(0);
   readOnlySignal = signal(5).asReadonly(); //read only signal
-
+  counterSO = signal<Counter>({ //generic parameter of signal
+    value: 100
+  });
+  arrSignals = signal<number[]>([1, 2, 3])
 
   /*increment() {
     this.counter++;
@@ -34,7 +40,22 @@ export class HomeComponent {
     //this.counterSignal.set(this.counterSignal()+1);
     
     //here we take current value and adding 1 to this current value
-    this.counterSignal.update((counter) => counter +1);
+    //this.counterSignal.update((counter) => counter +1);    
+
+    //here is correct way of mutation signal object property
+    this.counterSO.update(counterSO => 
+      ({
+        ...counterSO,
+        value: counterSO.value +1
+      })
+    )
+  }
+
+  append() {
+    this.arrSignals.update((values) => ([
+      ...values,
+      values[values.length - 1] + 1
+    ]))
   }
 
 }

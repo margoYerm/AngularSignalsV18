@@ -37,6 +37,7 @@
 
   <p>Read only signal: {{readOnlySignal()}}</p>
   <p>Counter value like a signal: {{counterSignal()}}</p>
+  
   <button class="btn" (click)="incrementSignal()">Increment(signal)</button>
   <p>
     Signal must always have a value ( <i>signal(0 / null / some value)</i>).
@@ -46,4 +47,10 @@
     For change value of the signal we should use this syntax:
     <i>this.counterSignal.set(this.counterSignal()+1)</i>
   </p>
+
+  <p>Counter value like a signal object: {{counterSO().value}}</p>
+  <hr>
+
+  <p>Signal array of numbers: {{arrSignals().join(', ')}}</p>
+  <button class="btn" (click)="append()">Append</button>
 </div>
