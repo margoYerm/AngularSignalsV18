@@ -22,3 +22,27 @@
   </mat-tab-group>
 
 </div>
+
+
+<div class="demo-signals">
+  <h4>What is signals</h4>
+  <p>Counter value without signals: {{counter}}</p>
+  <button class="btn" (click)="increment()">Increment</button>
+  <p>This works because Angular use library Zone js for change detection,
+    which is patching all the DOM API(setTimeout, AJAX requests etc.). It's 
+    checking all component's expressions before an event and after an event.
+    It's marked this value dirty and should be checked after each action.
+  </p>
+  <hr>
+
+  <p>Counter value like a signal: {{counterSignal()}}</p>
+  <button class="btn" (click)="incrementSignal()">Increment(signal)</button>
+  <p>
+    Signal must always have a value ( <i>signal(0 / null / some value)</i>).
+    Now this is <i>WritableSignal</i> of type number.
+    To show value in the template, it should be called is double 
+    squire brackets <i>counterSignal()</i>. <br>
+    For change value of the signal we should use this syntax:
+    <i>this.counterSignal.set(this.counterSignal()+1)</i>
+  </p>
+</div>
