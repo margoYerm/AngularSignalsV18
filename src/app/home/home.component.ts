@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, effect, inject, Injector, signal} from '@angular/core';
+import {afterNextRender, Component, computed, effect, EffectRef, inject, Injector, signal} from '@angular/core';
 import {CoursesService} from "../services/courses.service";
 import {Course, sortCoursesBySeqNo} from "../models/course.model";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
@@ -30,13 +30,33 @@ export class HomeComponent {
     value: 100
   });
   arrSignals = signal<number[]>([1, 2, 3]);  
+  effectRef: EffectRef | null = null;
 
   constructor() {
-    effect(() => {
+    //for method cleanup effect
+    /*this.effectRef = effect(() => {
       //will be called in startup time with initial value
-      console.log(`Counter value: ${this.counterSignal}`);
-      //this.incrementSignal();
-    }, {allowSignalWrites: false}) // if true, it brock my browser((
+      console.log(`Counter value: ${this.counterSignal}`);      
+    })*/
+
+    //callback onCleanup for clean timeout
+    this.effectRef = effect((onCleanup) => {  
+      const counter = this.counterSignal();    
+      const timeout = setTimeout(() => {
+        console.log(`Counter value: ${counter}`);
+      }, 1000)  
+      //will be called when the effect gets destroyed but also before
+      //the next execution og the effect
+      onCleanup(() => {
+        console.log('Calling cleanup');
+        clearTimeout(timeout);
+      })   
+    })
+  }  
+
+  //after calling this method logging not will be executed (from effect)
+  cleanup() {
+    this.effectRef?.destroy(); 
   }
 
   tenXCounter = computed(() => {
