@@ -29,21 +29,14 @@ export class HomeComponent {
   counterSObj = signal<Counter>({ //generic parameter of signal
     value: 100
   });
-  arrSignals = signal<number[]>([1, 2, 3]);
-
-  //for prevent memory leaks cause effect in afterNextRender
-  injector = inject(Injector);//from angular/core
+  arrSignals = signal<number[]>([1, 2, 3]);  
 
   constructor() {
-    //defining effect not in constructor
-    afterNextRender(() => {
-      effect(() => {
-        //will be called in startup time with initial value
-        console.log(`Counter value: ${this.counterSignal}`)
-      }, {
-        injector: this.injector //for clean up effect when onDestroy
-      }) //Counter value: [Signal: num]
-    })    
+    effect(() => {
+      //will be called in startup time with initial value
+      console.log(`Counter value: ${this.counterSignal}`);
+      //this.incrementSignal();
+    }, {allowSignalWrites: false}) // if true, it brock my browser((
   }
 
   tenXCounter = computed(() => {
