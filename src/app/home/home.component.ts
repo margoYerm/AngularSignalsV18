@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, Injector, signal} from '@angular/core';
+import {afterNextRender, Component, computed, effect, inject, Injector, signal} from '@angular/core';
 import {CoursesService} from "../services/courses.service";
 import {Course, sortCoursesBySeqNo} from "../models/course.model";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
@@ -23,8 +23,7 @@ type Counter = {
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-  //counter = 0;
+export class HomeComponent {  
   counterSignal = signal(0);
   readOnlySignal = signal(5).asReadonly(); //read only signal
   counterSObj = signal<Counter>({ //generic parameter of signal
@@ -32,11 +31,19 @@ export class HomeComponent {
   });
   arrSignals = signal<number[]>([1, 2, 3]);
 
+  //for prevent memory leaks cause effect in afterNextRender
+  injector = inject(Injector);//from angular/core
+
   constructor() {
-    effect(() => {
-      //will be called in startup tile with initial value
-      console.log(`Counter value: ${this.counterSignal}`)
-    }) //Counter value: [Signal: num]
+    //defining effect not in constructor
+    afterNextRender(() => {
+      effect(() => {
+        //will be called in startup time with initial value
+        console.log(`Counter value: ${this.counterSignal}`)
+      }, {
+        injector: this.injector //for clean up effect when onDestroy
+      }) //Counter value: [Signal: num]
+    })    
   }
 
   tenXCounter = computed(() => {
