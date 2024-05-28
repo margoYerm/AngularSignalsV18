@@ -48,9 +48,14 @@
     <i>this.counterSignal.set(this.counterSignal()+1)</i>
   </p>
 
-  <p>Counter value like a signal object: {{counterSO().value}}</p>
+  <p>Counter value like a signal object: {{counterSObj().value}}</p>
   <hr>
 
   <p>Signal array of numbers: {{arrSignals().join(', ')}}</p>
   <button class="btn" (click)="append()">Append</button>
+  <hr>
+
+  <p>Computed signal (click to the increment btn) 10X: {{tenXCounter()}}</p>
+  <p>Computed signal  100X: {{hundredXCounter()}}</p>
+  
 </div>

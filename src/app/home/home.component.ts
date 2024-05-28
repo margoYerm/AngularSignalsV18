@@ -27,28 +27,46 @@ export class HomeComponent {
   //counter = 0;
   counterSignal = signal(0);
   readOnlySignal = signal(5).asReadonly(); //read only signal
-  counterSO = signal<Counter>({ //generic parameter of signal
+  counterSObj = signal<Counter>({ //generic parameter of signal
     value: 100
   });
-  arrSignals = signal<number[]>([1, 2, 3])
+  arrSignals = signal<number[]>([1, 2, 3]);
 
-  /*increment() {
-    this.counter++;
-  }*/
+  constructor() {
+    effect(() => {
+      //will be called in startup tile with initial value
+      console.log(`Counter value: ${this.counterSignal}`)
+    }) //Counter value: [Signal: num]
+  }
+
+  tenXCounter = computed(() => {
+    const val = this.counterSignal();
+    //computed signal always has to return a value
+    return val * 10;
+  })
+
+  //computed signal that depends of another computed signal
+  hundredXCounter = computed(() => {
+    const val = this.tenXCounter();    
+    return val * 10;
+  })
+
+ 
 
   incrementSignal() {
     //this.counterSignal.set(this.counterSignal()+1);
     
     //here we take current value and adding 1 to this current value
-    //this.counterSignal.update((counter) => counter +1);    
+    //use this for demo texXCounter
+    this.counterSignal.update((counter) => counter +1);    
 
     //here is correct way of mutation signal object property
-    this.counterSO.update(counterSO => 
+    /*this.counterSObj.update(counterSO => 
       ({
-        ...counterSO,
-        value: counterSO.value +1
+        ...counterSObj,
+        value: counterSObj.value +1
       })
-    )
+    )*/
   }
 
   append() {
