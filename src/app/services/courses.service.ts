@@ -10,6 +10,9 @@ import {GetCoursesResponse} from "../models/get-courses.response";
   providedIn: "root"
 })
 export class CoursesService {
-
+  //before loadAllCourses(): Observable<Course[]>
+  async loadAllCourses(url: string): Promise<Course[]> {
+    return []
+  }
 
 }
