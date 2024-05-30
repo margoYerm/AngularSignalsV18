@@ -28,7 +28,8 @@ export class HomeComponent {
   //we use signals for Angular knows when data was changed
   //# makes signal private
   #courses = signal<Course[]>([]);
-  coursesService = inject(CoursesService);
+  coursesService = inject(CoursesServiceWithFetch);
+  //coursesService = inject(CoursesService);
 
   beginnerCourses = computed(() => {
     return this.#courses().filter(course => course.category === 'BEGINNER');
