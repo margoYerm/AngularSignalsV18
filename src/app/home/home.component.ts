@@ -51,7 +51,8 @@ export class HomeComponent {
   async loadCourses() {
     try {
       const courses = await this.coursesService.loadAllCourses();
-      this.#courses.set(courses); //synchronous code
+      //sortCoursesBySeqNo defined in models/course.module.ts
+      this.#courses.set(courses.sort(sortCoursesBySeqNo)); //synchronous code
     } catch(err) {
       alert('Error loading courses!');
       console.error(err);
