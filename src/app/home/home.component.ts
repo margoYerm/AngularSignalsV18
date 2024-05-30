@@ -26,24 +26,35 @@ type Counter = {
 
 export class HomeComponent {
   //we use signals for Angular knows when data was changed
-  courses = signal<Course[]>([]);
+  //# makes signal private
+  #courses = signal<Course[]>([]);
   coursesService = inject(CoursesService);
 
-  constructor() { 
-    this.loadCourses() //we can finish with this row, without .then()
-      .then(() => console.log('All courses loaded: ', this.courses()))
-  }
+  beginnerCourses = computed(() => {
+    return this.#courses().filter(course => course.category === 'BEGINNER');
+  })
 
+  advancedCourses = computed(() => {
+    return this.#courses().filter(course => course.category === 'ADVANCED');
+  })
+
+  constructor() {
+    this.loadCourses() //we can finish with this row, without .then()
+      .then(() => console.log('All courses loaded: ', this.#courses()))
+
+    effect(() => {
+      console.log('Beginner courses: ', this.beginnerCourses());
+      console.log('Advanced courses: ', this.advancedCourses());
+    })
+  }
   
   async loadCourses() {
     try {
-      const courses = await this.coursesService.loadAllCourses(); 
-      this.courses.set(courses); //synchronous code
+      const courses = await this.coursesService.loadAllCourses();
+      this.#courses.set(courses); //synchronous code
     } catch(err) {
       alert('Error loading courses!');
       console.error(err);
     }
-    
-  } 
-
+  }
 }
