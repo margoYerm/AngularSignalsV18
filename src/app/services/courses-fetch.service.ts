@@ -53,7 +53,7 @@ export class CoursesServiceWithFetch {
 
   async deleteCourse (courseId: string): Promise<void> {
     const response = await fetch(`${this.env.apiRoot}/courses/${courseId}`, {
-      method: 'DELETE',      
-    });   
+      method: 'DELETE',
+    });
   }
 }
