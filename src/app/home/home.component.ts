@@ -59,4 +59,14 @@ export class HomeComponent {
       console.error(err);
     }
   }
+
+  //method for update list of courses if course was updated or new course 
+  //was created
+  onCourseUpdated(updatedCourse: Course) {
+    const courses = this.#courses(); //value of the Signal
+    const newCourses = courses.map(course => (
+      course.id === updatedCourse.id ? updatedCourse : course
+    ));
+    this.#courses.set(newCourses);
+  }
 }
