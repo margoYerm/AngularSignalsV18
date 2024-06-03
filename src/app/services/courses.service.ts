@@ -36,7 +36,7 @@ export class CoursesService {
   }
 
   async deleteCourse (courseId: string) {
-    const delete$ = this.http.delete(`this.envCourses/${courseId}`);
+    const delete$ = this.http.delete(`${this.envCourses}/${courseId}`);
     return firstValueFrom(delete$);
   }
 }

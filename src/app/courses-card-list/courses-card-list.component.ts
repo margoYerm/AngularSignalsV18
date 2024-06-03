@@ -23,6 +23,9 @@ export class CoursesCardListComponent {
 
   //output for parent component, that new data is available
   courseUpdated = output<Course>();
+
+  //output for parent, that this course was deleted
+  courseDeleted = output<string>();
   
   dialog = inject(MatDialog);  
 
@@ -36,4 +39,7 @@ export class CoursesCardListComponent {
     this.courseUpdated.emit(newCourse);
   }
 
+  onCourseDeleted(course: Course) {
+    this.courseDeleted.emit(course.id);
+  }
 }

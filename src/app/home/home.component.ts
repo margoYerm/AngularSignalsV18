@@ -69,4 +69,19 @@ export class HomeComponent {
     ));
     this.#courses.set(newCourses);
   }
+
+  async onCourseDeleted(courseId: string) {
+    try {
+      await this.coursesService.deleteCourse(courseId);
+      //logic for update signal
+      const courses = this.#courses(); //value of the Signal
+      const newCourses = courses.filter(
+        course => course.id !== courseId
+      );
+      this.#courses.set(newCourses);
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting course.');
+    }    
+  }
 }

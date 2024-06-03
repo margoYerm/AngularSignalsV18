@@ -71,7 +71,6 @@ export class EditCourseDialogComponent {
       alert('Failed to save the course.');
     }
   }
-
 }
 
 export async function openEditCourseDialog(
