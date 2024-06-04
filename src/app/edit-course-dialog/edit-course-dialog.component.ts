@@ -58,6 +58,18 @@ export class EditCourseDialogComponent {
     const courseProps = this.form.value as Partial<Course>;
     if (this.data?.mode === 'update') { //this is a custom type 
       await this.saveCourse(this.data?.course!.id, courseProps)
+    } else if (this.data.mode === 'create') {
+      await this.createCourse(courseProps);
+    }
+  }
+
+  async createCourse (course: Partial<Course>) {
+    try {
+      const newCourse = await this.courseService.createCourse(course);
+      this.dialogRef.close(newCourse);
+    } catch(err) {
+      console.error(err);
+      alert('Error creating the course');
     }
   }
 

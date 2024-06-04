@@ -8,6 +8,7 @@ import {MessagesService} from "../messages/messages.service";
 import {catchError, from, throwError} from "rxjs";
 import {toObservable, toSignal, outputToObservable, outputFromObservable} from "@angular/core/rxjs-interop";
 import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
+import { openEditCourseDialog } from '../edit-course-dialog/edit-course-dialog.component';
 
 type Counter = {
   value: number;
@@ -31,21 +32,23 @@ export class HomeComponent {
   //coursesService = inject(CoursesServiceWithFetch);
   coursesService = inject(CoursesService);
 
+  dialog = inject(MatDialog);  // for onAddCourse() fn
+
   beginnerCourses = computed(() => {
     return this.#courses().filter(course => course.category === 'BEGINNER');
   })
 
   advancedCourses = computed(() => {
     return this.#courses().filter(course => course.category === 'ADVANCED');
-  })
+  })  
 
   constructor() {
     this.loadCourses() //we can finish with this row, without .then()
       .then(() => console.log('All courses loaded: ', this.#courses()))
 
     effect(() => {
-      console.log('Beginner courses: ', this.beginnerCourses());
-      console.log('Advanced courses: ', this.advancedCourses());
+      //console.log('Beginner courses: ', this.beginnerCourses());
+      //console.log('Advanced courses: ', this.advancedCourses());
     })
   }
   
@@ -83,5 +86,18 @@ export class HomeComponent {
       console.error(err);
       alert('Error deleting course.');
     }    
+  }
+
+  async onAddCourse() {
+    const newCourse = await openEditCourseDialog(this.dialog, {
+      mode: 'create',
+      title: 'Create New Course',
+    })
+    //for signals always return new array, don't modify existing signal!!!!!!
+    const newCourses = [
+      ...this.#courses(),
+      newCourse
+    ];
+    this.#courses.set(newCourses);
   }
 }
