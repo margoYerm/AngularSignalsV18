@@ -9,6 +9,7 @@ import {catchError, from, throwError} from "rxjs";
 import {toObservable, toSignal, outputToObservable, outputFromObservable} from "@angular/core/rxjs-interop";
 import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
 import { openEditCourseDialog } from '../edit-course-dialog/edit-course-dialog.component';
+import { LoadingService } from '../loading/loading.service';
 
 type Counter = {
   value: number;
@@ -34,6 +35,9 @@ export class HomeComponent {
 
   dialog = inject(MatDialog);  // for onAddCourse() fn
 
+  //loading indicator
+  loadingService = inject(LoadingService);
+
   beginnerCourses = computed(() => {
     return this.#courses().filter(course => course.category === 'BEGINNER');
   })
@@ -54,13 +58,18 @@ export class HomeComponent {
   
   async loadCourses() {
     try {
+      //we will add loading indicator to the service
+      //this.loadingService.loadingOn(); 
       const courses = await this.coursesService.loadAllCourses();
       //sortCoursesBySeqNo defined in models/course.module.ts
       this.#courses.set(courses.sort(sortCoursesBySeqNo)); //synchronous code
+
     } catch(err) {
       alert('Error loading courses!');
       console.error(err);
-    }
+    } /*finally { //will be turnedOff if success or error
+      this.loadingService.loadingOff();
+    }*/
   }
 
   //method for update list of courses if course was updated or new course 
