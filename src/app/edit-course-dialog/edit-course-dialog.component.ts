@@ -8,6 +8,7 @@ import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {CourseCategoryComboboxComponent} from "../course-category-combobox/course-category-combobox.component";
 import {CourseCategory} from "../models/course-category.model";
 import { firstValueFrom } from 'rxjs';
+import { MessagesService } from '../messages/messages.service';
 
 @Component({
   selector: 'edit-course-dialog',
@@ -36,6 +37,8 @@ export class EditCourseDialogComponent {
   });
 
   courseService = inject(CoursesService);
+
+  messagesService = inject(MessagesService);
 
   constructor() {
     //patchValue() using for fill only partial controls of the form 
@@ -69,7 +72,7 @@ export class EditCourseDialogComponent {
       this.dialogRef.close(newCourse);
     } catch(err) {
       console.error(err);
-      alert('Error creating the course');
+      this.messagesService.showMessage('Error creating the course', 'error');      
     }
   }
 
@@ -80,7 +83,7 @@ export class EditCourseDialogComponent {
       this.dialogRef.close(updatedCourse);
     } catch (err){
       console.error(err);
-      alert('Failed to save the course.');
+      this.messagesService.showMessage('Failed to save the course.', 'error');      
     }
   }
 }
