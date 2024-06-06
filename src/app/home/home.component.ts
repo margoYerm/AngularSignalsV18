@@ -38,6 +38,9 @@ export class HomeComponent {
   //loading indicator
   loadingService = inject(LoadingService);
 
+  //messages component with own service, alert
+  messagesService = inject(MessagesService);
+
   beginnerCourses = computed(() => {
     return this.#courses().filter(course => course.category === 'BEGINNER');
   })
@@ -65,7 +68,9 @@ export class HomeComponent {
       this.#courses.set(courses.sort(sortCoursesBySeqNo)); //synchronous code
 
     } catch(err) {
-      alert('Error loading courses!');
+      //it's useful to different user messages ( "error" | "warning" | "info" | "success";)
+      this.messagesService.showMessage('Error loading courses!', 'error');
+      //alert('Error loading courses!'); //old way to error handling
       console.error(err);
     } /*finally { //will be turnedOff if success or error
       this.loadingService.loadingOff();
