@@ -30,3 +30,8 @@ You can also start the frontend application using the following command:
     ng serve
 
 The application is visible in port 4200: [http://localhost:4200](http://localhost:4200)
+
+# To login use 
+
+email: 'test@angular-university.io',
+password: 'test',

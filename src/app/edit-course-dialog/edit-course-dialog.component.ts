@@ -32,7 +32,7 @@ export class EditCourseDialogComponent {
   form = this.fb.group({
     title: [''],
     longDescription: [''],
-    category: [''],
+    //category: [''],
     iconUrl: [''],
   });
 
@@ -40,14 +40,24 @@ export class EditCourseDialogComponent {
 
   messagesService = inject(MessagesService);
 
+  //input for child model signal with initial value BEGINNER
+  category = signal<CourseCategory>("BEGINNER");
+
   constructor() {
     //patchValue() using for fill only partial controls of the form 
     //(from server to the template)
     this.form.patchValue({
       title: this.data?.course?.title,
       longDescription: this.data?.course?.longDescription,
-      category: this.data?.course?.category,
+      //category: this.data?.course?.category,
       iconUrl: this.data?.course?.iconUrl,
+    })
+
+    //Set initial value to model signal category
+    this.category.set(this.data?.course!.category);
+    //For see how works model signal category
+    effect(() => {
+      console.log(`Course category bi-directional binding: ${this.category()}`);
     })
   }
 
@@ -59,6 +69,7 @@ export class EditCourseDialogComponent {
 
   async onSave() {
     const courseProps = this.form.value as Partial<Course>;
+    courseProps.category = this.category(); //adding value from the model signal
     if (this.data?.mode === 'update') { //this is a custom type 
       await this.saveCourse(this.data?.course!.id, courseProps)
     } else if (this.data.mode === 'create') {
