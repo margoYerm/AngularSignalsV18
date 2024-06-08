@@ -107,6 +107,7 @@ export class HomeComponent {
       mode: 'create',
       title: 'Create New Course',
     })
+    if(!newCourse) {return}
     //for signals always return new array, don't modify existing signal!!!!!!
     const newCourses = [
       ...this.#courses(),

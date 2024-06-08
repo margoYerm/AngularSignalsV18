@@ -54,7 +54,7 @@ export class EditCourseDialogComponent {
     })
 
     //Set initial value to model signal category
-    this.category.set(this.data?.course!.category);
+    this.category.set(this.data?.course?.category ?? 'BEGINNER');
     //For see how works model signal category
     effect(() => {
       console.log(`Course category bi-directional binding: ${this.category()}`);

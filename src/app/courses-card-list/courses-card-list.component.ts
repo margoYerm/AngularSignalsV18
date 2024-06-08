@@ -35,6 +35,7 @@ export class CoursesCardListComponent {
       title: 'Update existing course',
       course
     })
+    if(!newCourse) {return};
     console.log('Course was edited', newCourse);
     this.courseUpdated.emit(newCourse);
   }
