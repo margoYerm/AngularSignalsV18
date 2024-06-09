@@ -30,6 +30,11 @@ export class CoursesService {
     return response.courses;
   }
 
+  async getCourseById (courseId: string): Promise<Course> {
+    const course$ = this.http.get<Course>(`${this.envCourses}/${courseId}`);    
+    return firstValueFrom(course$);
+  }
+
   //Partial type (Make all properties in T optional) because we don't have id yet. 
   async createCourse (course: Partial<Course>): Promise<Course> {
     const course$ = this.http.post<Course>(this.envCourses, course);
