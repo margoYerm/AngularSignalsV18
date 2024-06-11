@@ -24,10 +24,17 @@
       <option value="ADVANCED">Advanced</option>
     </select>
   </div> -->
-  <course-category-combobox
+
+  <!-- This is a better way  -->
+  <!-- <course-category-combobox
     label="Course category"
     [(value)]="category"
-  />
+  /> -->
+
+  <!-- This is demo for contentChild -->
+  <course-category-combobox [(value)]="category">
+    <div class="title" #title>Course category vie Content Projection</div>
+  </course-category-combobox>
 
   <div class="form-control">
     <label>Course image:</label>
