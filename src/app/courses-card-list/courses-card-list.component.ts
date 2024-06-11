@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, ElementRef, effect, inject, input, output, signal, viewChildren} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {Course} from "../models/course.model";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
@@ -28,6 +28,16 @@ export class CoursesCardListComponent {
   courseDeleted = output<string>();
   
   dialog = inject(MatDialog);  
+
+  //Lesson ViewChildren signal query
+  coursesCards = viewChildren<ElementRef>('courseCard');
+
+  constructor() {
+    effect(() => {
+      //we get 2 collections of elements (beginner and advanced) 
+      console.log('CoursesCards: ', this.coursesCards());
+    })
+  }
 
   async onEditCourse(course: Course) {
     const newCourse = await openEditCourseDialog(this.dialog, {

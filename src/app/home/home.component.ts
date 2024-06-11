@@ -1,15 +1,16 @@
-import {afterNextRender, Component, computed, effect, EffectRef, inject, Injector, Signal, signal} from '@angular/core';
+import {afterNextRender, Component, computed, effect, EffectRef, ElementRef, inject, INJECTOR, Injector, Signal, signal, viewChild} from '@angular/core';
 import {CoursesService} from "../services/courses.service";
 import {Course, sortCoursesBySeqNo} from "../models/course.model";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {CoursesCardListComponent} from "../courses-card-list/courses-card-list.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MessagesService} from "../messages/messages.service";
-import {catchError, from, throwError} from "rxjs";
+import {catchError, from, interval, startWith, throwError} from "rxjs";
 import {toObservable, toSignal, outputToObservable, outputFromObservable} from "@angular/core/rxjs-interop";
 import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
 import { openEditCourseDialog } from '../edit-course-dialog/edit-course-dialog.component';
 import { LoadingService } from '../loading/loading.service';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 
 type Counter = {
   value: number;
@@ -20,7 +21,8 @@ type Counter = {
   imports: [
     MatTabGroup,
     MatTab,
-    CoursesCardListComponent
+    CoursesCardListComponent,
+    MatTooltipModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -49,9 +51,28 @@ export class HomeComponent {
     return this.#courses().filter(course => course.category === 'ADVANCED');
   })  
 
+  //get an instance of the coursesCardList. With type it can't return undefined
+  beginnersList = viewChild<CoursesCardListComponent>('beginnersList'); 
+  //get an element ref.
+  beginnersListRef = viewChild('beginnersList', {
+    //read: ElementRef //show element
+    read: MatTooltip //logging tooltip
+  }); 
+
+  beginnersListCheck = viewChild('beginnersList', {    
+    read: CoursesCardListComponent //logging tooltip
+  });
+
   constructor() {
     this.loadCourses() //we can finish with this row, without .then()
       .then(() => console.log('All courses loaded: ', this.#courses()))
+
+    //this effect for demo viewChild signal component
+      effect(() => {
+        console.log('Beginners list', this.beginnersList());
+        console.log('Beginners listCheck', this.beginnersListCheck());
+        console.log('Beginners element', this.beginnersListRef());
+    })
 
     effect(() => {
       //console.log('Beginner courses: ', this.beginnerCourses());
@@ -114,5 +135,28 @@ export class HomeComponent {
       newCourse
     ];
     this.#courses.set(newCourses);
+  }
+
+
+  //example for toSignal() Configuration options - requireSync and initialValue
+  //(name of lesson in the Signals course)  
+  injector = inject(Injector);
+  onToSignalExample() {     
+    const number$ = interval(1000)//Observable with asynchronous values
+    .pipe(startWith(0)) //to avoid error from requireSync: true
+    const numbers = toSignal(number$, {//converting Observable to a signal
+      injector: this.injector, 
+       //without initialValue in this case we get: undefined 1 2 3 4..... 
+      //initialValue: 0, //to have initial value in the signal
+
+      requireSync: true // for trow error if stream don't has initial value
+    })
+    effect(() => {
+      //first value is undefined, because it don't have initial value,
+      //so we will pass it initialValue: 0
+      console.log('Numbers: ', numbers() )
+    }, {
+      injector: this.injector
+    }) 
   }
 }

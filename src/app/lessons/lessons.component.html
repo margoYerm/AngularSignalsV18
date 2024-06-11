@@ -1,5 +1,34 @@
 <div class="lessons">
-
+ @if(mode() === 'master') {
+  <div class="header">
+    <h1>Search Lessons</h1>
+    <div class="form-control search-controls">
+      <!-- First way of get value of the input
+        <input type="text" placeholder="Search for a lesson"
+        #search (keyup.enter)="onSearch(search.value)">      
+      <button class="btn search" 
+        (click)="onSearch(search.value)"
+        >Search</button> -->
+      <input #search placeholder="Search for a lesson"
+       (keyup.enter)="onSearch()">      
+      <button class="btn search" 
+        (click)="onSearch()"
+        >Search</button>
+    </div>
+  </div>
+  @if(lessons().length > 0) {
+    <div class="table-container">
+      <table class="results-table">
+        @for (lesson of lessons(); track lesson.id) {
+          <tr>
+            <td>{{lesson.description}}</td>
+            <td>{{lesson.duration}}</td>
+          </tr>
+        }
+      </table>
+    </div>
+  }
+ } 
 
 </div>
 
