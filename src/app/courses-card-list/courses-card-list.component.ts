@@ -35,7 +35,7 @@ export class CoursesCardListComponent {
   constructor() {
     effect(() => {
       //we get 2 collections of elements (beginner and advanced) 
-      console.log('CoursesCards: ', this.coursesCards());
+      //console.log('CoursesCards: ', this.coursesCards());
     })
   }
 

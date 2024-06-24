@@ -65,13 +65,13 @@ export class HomeComponent {
 
   constructor() {
     this.loadCourses() //we can finish with this row, without .then()
-      .then(() => console.log('All courses loaded: ', this.#courses()))
+      //.then(() => console.log('All courses loaded: ', this.#courses()))
 
     //this effect for demo viewChild signal component
       effect(() => {
-        console.log('Beginners list', this.beginnersList());
-        console.log('Beginners listCheck', this.beginnersListCheck());
-        console.log('Beginners element', this.beginnersListRef());
+        //console.log('Beginners list', this.beginnersList());
+        //console.log('Beginners listCheck', this.beginnersListCheck());
+        //console.log('Beginners element', this.beginnersListRef());
     })
 
     effect(() => {

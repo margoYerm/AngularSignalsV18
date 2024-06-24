@@ -28,10 +28,29 @@ export class LessonsComponent {
   searchInput = viewChild.required<ElementRef>('search'); 
 
   //onSearch(inputValue: string) {} //First way of get a value from the input
-  onSearch() {
+  async onSearch() {
     //grab value from the signal query
     const query = this.searchInput()?.nativeElement.value;
     //This value will be logged after push enter or click on btn
     console.log('Input query', query);
+
+    //fetching lessons from the server
+    const results = await this.lessonsService.loadLessons({query});
+    this.lessons.set(results);
+  }
+
+  onLessonSelected(lesson: Lesson) {
+    this.mode.set('detail');
+    this.selectedLesson.set(lesson);
+  }
+
+  onCancel() {
+    this.mode.set('master');
+  }
+
+  onLessonUpdated(lesson: Lesson) {
+    this.lessons.update( lessons => 
+      lessons.map(l => l.id === lesson.id ? lesson : l)
+    );
   }
 }

@@ -31,8 +31,10 @@ export class CoursesService {
   }
 
   async getCourseById (courseId: string): Promise<Course> {
-    const course$ = this.http.get<Course>(`${this.envCourses}/${courseId}`);    
-    return firstValueFrom(course$);
+    const course$ = this.http.get<Course>(`${this.envCourses}/${courseId}`); 
+    const course = await firstValueFrom(course$);
+    //console.log('getCourseById from courses service', course);
+    return course;
   }
 
   //Partial type (Make all properties in T optional) because we don't have id yet. 

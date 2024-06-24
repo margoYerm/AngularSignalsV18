@@ -16,12 +16,14 @@ export class CourseComponent implements OnInit {
   lessons = signal<Lesson[]>([]);
 
   //for get the data from the courses.resolver
-  router = inject(ActivatedRoute);
+  route = inject(ActivatedRoute);
 
   ngOnInit() {
     //getting data from the courses resolver
-    this.course.set(this.router.snapshot.data['course']);
+    this.course.set(this.route.snapshot.data["course"]);
+   
     //getting data from the lessons resolver
-    this.lessons.set(this.router.snapshot.data['lessons']);
+    this.lessons.set(this.route.snapshot.data["lessons"]);
+    console.log('Lessons in course', this.lessons())
   }
 }
