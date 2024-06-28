@@ -6,7 +6,12 @@
     Add Course
   </button>
 
-  <button class="btn" (click)="onToSignalExample()">toSignal</button>
+  <button class="btn" 
+    (click)="[onToSignalExample2(), onToSignalError()]">
+      toSignal
+  </button>
+
+  <button class="btn" (click)="onToObservable()">toObservable</button>
 
   <mat-tab-group>
 

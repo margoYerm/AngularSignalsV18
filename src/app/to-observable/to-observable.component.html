@@ -1,0 +1,29 @@
+<div class="container">
+  
+  <button class="btn" (click)="onToObservableExample()">toObservable</button>
+
+  <pre><code>
+  injector = inject(Injector);
+
+  onToObservableExample() &#123;
+    const numbers = signal(0);
+    numbers.set(1);
+    numbers.set(2);
+    numbers.set(3);
+    const numbers$ = toObservable(numbers, &#123;
+        injector: this.injector,
+      &#125;)
+
+    numbers.set(4);
+    numbers$.subscribe(
+      numbers => console.log('numbers$ ', numbers)
+    )
+    numbers.set(5); 
+  &#125;
+
+//In console will be numbers$ 5 because A use the effects and they are 
+//calling immediately. Effects wait when the signal become stabile and then
+//change detection will be notified vie effects and computed signals 
+  
+  </code></pre>
+</div>

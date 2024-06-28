@@ -6,6 +6,7 @@ import { isUserAuthenticated } from './guards/auth.guard';
 import { CourseComponent } from './course/course.component';
 import { courseResolver } from './course/course.resolver';
 import { courseLessonsResolver } from './course/course-lessons.resolver';
+import { ToObservableComponent } from './to-observable/to-observable.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
     }
   },
   {
+    path: "info",
+    component: ToObservableComponent,
+    canActivate: [isUserAuthenticated],
+  },
+  {
     path: "login",
     component: LoginComponent
   },
@@ -30,6 +36,7 @@ export const routes: Routes = [
     path: "lessons",
     component: LessonsComponent
   },
+  
   {
     path: '**',
     redirectTo: '/'

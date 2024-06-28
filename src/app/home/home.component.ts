@@ -63,7 +63,15 @@ export class HomeComponent {
     read: CoursesCardListComponent //logging tooltip
   });
 
+  //to convert signal to Observable, demo for lesson RxJs Interoperability
+  courses$ = toObservable(this.#courses);
+
   constructor() {
+    //using demo for lesson RxJs Interoperability
+    this.courses$.subscribe(
+      courses => console.log('Courses$', courses)
+    )
+
     this.loadCourses() //we can finish with this row, without .then()
       //.then(() => console.log('All courses loaded: ', this.#courses()))
 
@@ -159,4 +167,57 @@ export class HomeComponent {
       injector: this.injector
     }) 
   }
+
+  //toSignal example at the end of the course
+  //we using here injector = inject(Injector);
+  //we get data from the server   
+  coursesToSignal$ = from(this.coursesService.loadAllCourses()) //from return Promis
+  onToSignalExample2() {
+    const courses = toSignal(this.coursesToSignal$, {
+      injector: this.injector, //we pass it when we use it like click handler
+    });
+
+    effect(() => {
+      console.log('ToSignal courses$, example2', courses());
+    }, {
+      injector: this.injector
+    })
+  }
+
+  onToSignalError() {   
+    try {
+      const courses$ = from(this.coursesService.loadAllCourses())
+        .pipe(
+          catchError((err) => {
+            console.log('Error caught in the catchError', err)
+            throw err
+          })
+        )   
+      const courses = toSignal(courses$, {//converting Observable to a signal
+        injector: this.injector, 
+        rejectErrors: true, //handling error always in catchError and never in catch            
+      })
+      effect(() => {
+        //first value is undefined, because it don't have initial value,
+        //here always be last emitted value by the Observable (in our case - undefined)
+        console.log('toSignal errors', courses() ) 
+      }, {
+        injector: this.injector
+      }) 
+    } catch (err) { 
+      console.log('Error caught in the catch', err)
+    }
+  }
+
+
+  //Lesson RxJs Interoperability with toObservable in handler fn
+  injector2 = inject(Injector);
+  onToObservable() {
+    const courses2$ = toObservable(this.#courses, {
+      injector: this.injector2,
+    });
+    courses2$.subscribe(
+      courses => console.log('Courses2$: ', courses)
+    )
+  } //error without passing {injector: injector2}
 }
