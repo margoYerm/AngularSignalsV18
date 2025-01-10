@@ -4,11 +4,10 @@ import { Lesson } from "../models/lesson.model";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'course',
-  templateUrl: './course.component.html',
-  styleUrl: './course.component.scss',
-  standalone: true,
-  imports: [],
+    selector: 'course',
+    templateUrl: './course.component.html',
+    styleUrl: './course.component.scss',
+    imports: []
 }) 
  
 export class CourseComponent implements OnInit {

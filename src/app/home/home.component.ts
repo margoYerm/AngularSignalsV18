@@ -16,16 +16,15 @@ type Counter = {
   value: number;
 }
 @Component({
-  selector: 'home',
-  standalone: true,
-  imports: [
-    MatTabGroup,
-    MatTab,
-    CoursesCardListComponent,
-    MatTooltipModule,
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'home',
+    imports: [
+        MatTabGroup,
+        MatTab,
+        CoursesCardListComponent,
+        MatTooltipModule,
+    ],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 
 export class HomeComponent {

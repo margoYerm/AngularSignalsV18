@@ -7,13 +7,12 @@ import { EditCourseDialogData } from '../edit-course-dialog/edit-course-dialog.d
 import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'courses-card-list',
-  standalone: true,
-  imports: [
-    RouterLink,    
-  ],
-  templateUrl: './courses-card-list.component.html',
-  styleUrl: './courses-card-list.component.scss'
+    selector: 'courses-card-list',
+    imports: [
+        RouterLink,
+    ],
+    templateUrl: './courses-card-list.component.html',
+    styleUrl: './courses-card-list.component.scss'
 })
 export class CoursesCardListComponent {
   //this is required Signal input

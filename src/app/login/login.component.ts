@@ -6,14 +6,13 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import { retry } from 'rxjs';
 
 @Component({
-  selector: 'login',
-  standalone: true,
-  imports: [
-    RouterLink,
-    ReactiveFormsModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'login',
+    imports: [
+        RouterLink,
+        ReactiveFormsModule
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 

@@ -11,15 +11,14 @@ import { firstValueFrom } from 'rxjs';
 import { MessagesService } from '../messages/messages.service';
 
 @Component({
-  selector: 'edit-course-dialog',
-  standalone: true,
-  imports: [
-    LoadingIndicatorComponent,
-    ReactiveFormsModule,
-    CourseCategoryComboboxComponent
-  ],
-  templateUrl: './edit-course-dialog.component.html',
-  styleUrl: './edit-course-dialog.component.scss'
+    selector: 'edit-course-dialog',
+    imports: [
+        LoadingIndicatorComponent,
+        ReactiveFormsModule,
+        CourseCategoryComboboxComponent
+    ],
+    templateUrl: './edit-course-dialog.component.html',
+    styleUrl: './edit-course-dialog.component.scss'
 })
 export class EditCourseDialogComponent {
   dialogRef = inject(MatDialogRef); //reference to the dialog
