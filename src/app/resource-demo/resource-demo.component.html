@@ -3,14 +3,15 @@
 
   <div class="course-header">
     <div class="form-control">
+      <!--search signal-->
       <input placeholder="Search lessons"
              (keydown)="searchLessons(input.value)" #input>
     </div>
   </div>
-
-    <!-- @if(lessons.isLoading()) {
+  <!--isLoading() is fn from the resource signal-->
+    @if(lessons.isLoading()) {
       <mat-spinner class="loading"/>
-    }
+    } <!--results from lessons-->
     @else {
       <div class="table-container">
         <table class="results-table">
@@ -28,7 +29,7 @@
           }
         </table>
       </div>
-    } -->
+    } 
 
     <button class="btn reload-btn" (click)="reload()">
       Reload Lessons
