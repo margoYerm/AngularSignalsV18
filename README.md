@@ -1,15 +1,9 @@
 
 ##  Modern Angular With Signals Course
-
-This repository contains the code of the [Modern Angular With Signals Course](https://angular-university.io/course/angular-signals-course).
-
-This course repository is updated to Angular 18:
-
-![Modern Angular With Signals](https://d3vigmphadbn9b.cloudfront.net/course-images/large-images/angular-signals-course.jpg)
-
+This course repository is updated to Angular 18
 # Installation pre-requisites
 
-IMPORTANT: Please use Node 18 (Long Term Support version).
+Node 18 (Long Term Support version) is using in this project.
 
 # Running the local backend server
 
@@ -25,7 +19,7 @@ To run the frontend part of our code, we will use the Angular CLI:
 
     npm start
 
-You can also start the frontend application using the following command:
+or:
 
     ng serve
 
@@ -34,4 +28,4 @@ The application is visible in port 4200: [http://localhost:4200](http://localhos
 # To login use 
 
 email: 'test@angular-university.io',
-password: 'test',
+password: 'test'
