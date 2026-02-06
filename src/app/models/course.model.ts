@@ -7,8 +7,8 @@ export type Course = {
   seqNo: number;
   iconUrl: string;
   price: number;
-  uploadedImageUrl: string;
-  courseListIcon: string;
+  uploadedImageUrl?: string;
+  courseListIcon?: string;
   category: CourseCategory;
   lessonsCount: number;
 }

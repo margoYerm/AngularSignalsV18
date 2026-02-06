@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\server",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\course",
+    "\\src\\app\\guards",
+    "\\src\\app\\linked-signal"
+  ],
+  "SelectedNode": "\\src\\app\\course\\course.component.ts",
+  "PreviewInSolutionExplorer": false
+}

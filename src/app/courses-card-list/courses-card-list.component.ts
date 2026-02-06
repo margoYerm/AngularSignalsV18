@@ -50,6 +50,6 @@ export class CoursesCardListComponent {
   }
 
   onCourseDeleted(course: Course) {
-    this.courseDeleted.emit(course.id);
+    this.courseDeleted.emit(String(course.id));
   }
 }

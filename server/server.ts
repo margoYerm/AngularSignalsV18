@@ -1,13 +1,10 @@
 
-import * as express from 'express';
+import express from 'express';
 import {Application} from "express";
-import {getAllCourses, getCourseById} from "./get-courses.route";
-import {searchLessons} from "./search-lessons.route";
-import {saveCourse} from './save-course.route';
-import {loginUser} from './login.route';
-import {createCourse} from "./create-course.route";
-import {deleteCourse} from "./delete-course.route";
-import {saveLesson} from "./save-lesson.route";
+import {getAllCourses, getCourseById, createCourse, updateCourse as saveCourse, deleteCourse} from "./routes/course.routes";
+import { saveLesson, searchLessons } from './routes/lesson.routes';
+import { login } from './routes/auth.routes';
+
 
 const bodyParser = require('body-parser');
 
@@ -33,8 +30,10 @@ app.route('/api/courses/:id').delete(deleteCourse);
 
 app.route('/api/lessons/:id').put(saveLesson);
 
-app.route('/api/login').post(loginUser);
+app.route('/api/login').post(login);
 
 const httpServer = app.listen(9002, () => {
-  console.log("HTTP REST API Server running at http://localhost:" + httpServer.address()["port"]);
+  const address = httpServer.address();
+  const port = typeof address === 'object' && address !== null ? address.port : 9002;
+  console.log("HTTP REST API Server running at http://localhost:" + port);
 });
